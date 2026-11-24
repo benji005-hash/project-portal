@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<!--
+  Rockview ICT Portal
+  Page 2 of 2: Student course registration
+
+  Structure of this page
+    1. Header and navigation
+    2. Registration introduction
+    3. Registration guide (progress)
+    4. Registration form
+         Step 1  Student information     text + email inputs
+         Step 2  Academic information    select (dropdown)
+         Step 3  Specialisation track    radio buttons
+         Step 4  Elective courses        checkboxes
+         Step 5  Comments                textarea
+         Actions Submit and Reset buttons
+    5. Confirmation panel (shown after a valid submission)
+    6. Footer
+    7. Reset dialog and status message
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration | Rockview ICT Portal</title>
+    <meta name="description" content="Register for ICT courses at Rockview University: enter your student details, choose a specialisation track and select your electives.">
+    <meta name="theme-color" content="#17432F">
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+
+    <!-- Google Fonts: Manrope for headings, Inter for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
+
+    <!-- One external stylesheet shared by both pages -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Tells the stylesheet that JavaScript is available (used for the menu and scroll animations) -->
+    <script>document.documentElement.classList.add("js");</script>
+  </head>
+
+  <body id="top">
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <!-- Icon sprite: each icon is defined once here and reused with <use href="#i-name"> -->
+    <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <symbol id="i-cap" viewBox="0 0 24 24"><path d="M12 4.5 2.5 9.25 12 14l9.5-4.75L12 4.5Z" /><path d="M6.5 11.5v4.25c0 1.1 2.45 2.75 5.5 2.75s5.5-1.65 5.5-2.75V11.5" /><path d="M21.5 9.25v5" /></symbol>
+      <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4.5 12h15M13.5 6l6 6-6 6" /></symbol>
+      <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19.5v-15M6 10.5l6-6 6 6" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.75l4.5 4.5L19 7.5" /></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" /></symbol>
+      <symbol id="i-code" viewBox="0 0 24 24"><path d="M8.5 7.5 4 12l4.5 4.5M15.5 7.5 20 12l-4.5 4.5M13.5 5l-3 14" /></symbol>
+      <symbol id="i-network" viewBox="0 0 24 24"><circle cx="12" cy="5.5" r="2.5" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /><path d="M12 8v4M5.5 16v-2.5A1.5 1.5 0 0 1 7 12h10a1.5 1.5 0 0 1 1.5 1.5V16" /></symbol>
+      <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7.5" ry="3" /><path d="M4.5 6v6c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3V6" /><path d="M4.5 12v6c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3v-6" /></symbol>
+      <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.5 18.5h5M10.5 21.5h3" /><path d="M12 2.75a6.25 6.25 0 0 0-3.9 11.13c.7.57 1.15 1.4 1.15 2.3v.07h5.5v-.07c0-.9.45-1.73 1.15-2.3A6.25 6.25 0 0 0 12 2.75Z" /></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 5.75v5.5c0 4.4 2.9 7.7 7 9.75 4.1-2.05 7-5.35 7-9.75v-5.5L12 3Z" /><path d="M9 11.75 11.25 14l4-4" /></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16" /><path d="M7.5 15.5 11 11.5l3 2.5 4.5-6" /></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.75c-1.6-1.35-3.7-2-6-2H3.5v13H6c2.3 0 4.4.65 6 2 1.6-1.35 3.7-2 6-2h2.5v-13H18c-2.3 0-4.4.65-6 2Z" /><path d="M12 6.75v13" /></symbol>
+      <symbol id="i-clipboard" viewBox="0 0 24 24"><path d="M15.5 5h2A1.5 1.5 0 0 1 19 6.5v13a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.5v-13A1.5 1.5 0 0 1 6.5 5h2" /><rect x="8.5" y="3" width="7" height="4" rx="1" /><path d="M9 13.5l2.25 2.25 4-4.25" /></symbol>
+      <symbol id="i-message" viewBox="0 0 24 24"><path d="M4.5 5.5h15a1 1 0 0 1 1 1V16a1 1 0 0 1-1 1H11l-4.5 3.5V17h-2a1 1 0 0 1-1-1V6.5a1 1 0 0 1 1-1Z" /><path d="M8 9.75h8M8 12.75h5" /></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 11v5.5M12 7.75h.01" /></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 7.5V13M12 16.25h.01" /></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3.5 7.5 12 13.5l8.5-6" /></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" /></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.5s-7-6.1-7-11.75a7 7 0 0 1 14 0c0 5.65-7 11.75-7 11.75Z" /><circle cx="12" cy="9.75" r="2.5" /></symbol>
+      <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M15.75 8.25l-2.1 5.4-5.4 2.1 2.1-5.4 5.4-2.1Z" /></symbol>
+      <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="2" /><rect x="10" y="10" width="4" height="4" rx="0.5" /><path d="M10 3v3.5M14 3v3.5M10 17.5V21M14 17.5V21M3 10h3.5M3 14h3.5M17.5 10H21M17.5 14H21" /></symbol>
+      <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2" /><path d="M7 10l3 2.5L7 15M12.5 15H17" /></symbol>
+    </svg>
+
+    <!-- ================================================================
+         1. HEADER AND NAVIGATION
+         ================================================================ -->
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href="index.html" aria-label="Rockview University ICT Department, home">
+          <span class="brand__mark">
+            <img src="images/rockview-crest.png" alt="" width="36" height="36">
+          </span>
+          <span class="brand__text">
+            <span class="brand__name">Rockview University</span>
+            <span class="brand__dept">ICT Department</span>
+          </span>
+        </a>
+
+        <!-- Menu button for small screens (controlled by js/script.js) -->
+        <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+          <svg class="icon icon--menu" aria-hidden="true"><use href="#i-menu"></use></svg>
+          <svg class="icon icon--close" aria-hidden="true"><use href="#i-close"></use></svg>
+        </button>
+
+        <nav class="site-nav" id="site-nav" aria-label="Main">
+          <ul class="site-nav__list">
+            <li><a class="site-nav__link" href="index.html">Home</a></li>
+            <li><a class="site-nav__link" href="index.html#about">About Department</a></li>
+            <li><a class="site-nav__link" href="index.html#courses">Courses</a></li>
+            <!-- aria-current="page" marks and highlights the active page -->
+            <li><a class="site-nav__link" href="register.html" aria-current="page">Registration</a></li>
+            <li><a class="site-nav__link" href="#contact">Contact</a></li>
+          </ul>
+          <a class="btn btn--primary btn--sm site-nav__cta" href="register.html">
+            Register now
+            <svg class="icon icon--arrow" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <!-- ==============================================================
+           2. REGISTRATION INTRODUCTION
+           ============================================================== -->
+      <section class="page-hero pattern" aria-labelledby="page-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="breadcrumb">
+              <li><a href="index.html">Home</a></li>
+              <li aria-current="page">Registration</li>
+            </ol>
+          </nav>
+          <p class="eyebrow eyebrow--gold">Rockview University</p>
+          <h1 class="page-hero__title" id="page-title">Student Registration</h1>
+          <p class="page-hero__lead">Complete the form below to submit your course registration details.</p>
+          <ul class="page-hero__meta">
+            <li>
+              <svg class="icon" aria-hidden="true"><use href="#i-clipboard"></use></svg>
+              Five short steps
+            </li>
+            <li>
+              <svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg>
+              Fields marked * are required
+            </li>
+            <li>
+              <svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>
+              Prototype: nothing is stored
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="register">
+        <div class="container register__grid">
+          <!-- ==========================================================
+               3. REGISTRATION GUIDE
+               js/validation.js updates the count, the bar and each step
+               ========================================================== -->
+          <aside class="register__aside" aria-label="Registration guide">
+            <div class="card guide">
+              <div class="guide__head">
+                <h2 class="guide__title">Registration guide</h2>
+                <p class="guide__count"><strong id="guide-count">0 of 5</strong> steps complete</p>
+              </div>
+              <div class="progress" id="progress" role="progressbar" aria-label="Registration progress" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-valuetext="0 of 5 steps complete">
+                <div class="progress__bar" id="progress-bar"></div>
+              </div>
+              <ol class="steps" id="steps">
+                <li class="step">
+                  <a class="step__link" href="#section-student">
+                    <span class="step__marker">
+                      <span class="step__num">1</span>
+                      <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                    </span>
+                    <span class="step__label">Personal details</span>
+                    <span class="step__state">To do</span>
+                  </a>
+                </li>
+                <li class="step">
+                  <a class="step__link" href="#section-academic">
+                    <span class="step__marker">
+                      <span class="step__num">2</span>
+                      <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                    </span>
+                    <span class="step__label">Academic information</span>
+                    <span class="step__state">To do</span>
+                  </a>
+                </li>
+                <li class="step">
+                  <a class="step__link" href="#section-track">
+                    <span class="step__marker">
+                      <span class="step__num">3</span>
+                      <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                    </span>
+                    <span class="step__label">Select specialisation</span>
+                    <span class="step__state">To do</span>
+                  </a>
+                </li>
+                <li class="step">
+                  <a class="step__link" href="#section-electives">
+                    <span class="step__marker">
+                      <span class="step__num">4</span>
+                      <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                    </span>
+                    <span class="step__label">Choose electives</span>
+                    <span class="step__state">To do</span>
+                  </a>
+                </li>
+                <li class="step">
+                  <a class="step__link" href="#section-submit">
+                    <span class="step__marker">
+                      <span class="step__num">5</span>
+                      <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                    </span>
+                    <span class="step__label">Submit</span>
+                    <span class="step__state">To do</span>
+                  </a>
+                </li>
+              </ol>
+            </div>
+
+            <div class="callout callout--note" role="note">
+              <svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg>
+              <p>
+                <strong>Prototype notice</strong>
+                This form is a front-end demonstration. Your details are checked in your browser but are not sent to,
+                or stored by, any university system.
+              </p>
+            </div>
+          </aside>
+
+          <div class="register__main">
+            <!-- ========================================================
+                 4. REGISTRATION FORM
+                 ======================================================== -->
+            <div class="card form-card" id="form-card">
+              <div class="form-card__head">
+                <h2 class="form-card__title" id="form-title" tabindex="-1">Registration form</h2>
+                <p class="form-card__sub">
+                  Fields marked with <span class="req" aria-hidden="true">*</span><span class="sr-only">an asterisk</span>
+                  are required.
+                </p>
+              </div>
+
+              <!-- Error summary: filled in by js/validation.js when a submission has problems.
+                   It receives keyboard focus, so screen readers announce it once. -->
+              <div class="error-summary" id="error-summary" role="group" aria-labelledby="error-summary-title" tabindex="-1" hidden>
+                <h3 class="error-summary__title">
+                  <svg class="icon" aria-hidden="true"><use href="#i-alert"></use></svg>
+                  <span id="error-summary-title">Please check the form</span>
+                </h3>
+                <ul class="error-summary__list" id="error-summary-list"></ul>
+              </div>
+
+              <!-- method="post" is the correct method for sending form data. There is no server
+                   in this prototype, so js/validation.js checks the form and shows a confirmation
+                   instead of sending anything. -->
+              <form id="registration-form" action="#" method="post">
+                <!-- Step 1: Student information -->
+                <fieldset class="form-section" id="section-student" tabindex="-1">
+                  <legend class="form-section__legend">
+                    <span class="form-section__step">Step 1</span>
+                    <span class="form-section__title">Student information</span>
+                  </legend>
+                  <p class="form-section__hint">Enter your details as they appear on your student record.</p>
+
+                  <div class="form-section__body form-grid form-grid--2">
+                    <div class="field field--full">
+                      <label class="field__label" for="full-name">Full name <span class="req" aria-hidden="true">*</span></label>
+                      <input class="input" type="text" id="full-name" name="fullName" placeholder="e.g. Jane Banda" autocomplete="name" required aria-describedby="full-name-error">
+                      <p class="field__error" id="full-name-error" hidden>
+                        <svg class="icon" aria-hidden="true"><use href="#i-alert"></use></svg>
+                        <span></span>
+                      </p>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="email">Email address <span class="req" aria-hidden="true">*</span></label>
+                      <input class="input" type="email" id="email" name="email" placeholder="e.g. jane.banda@example.com" autocomplete="email" required aria-describedby="email-error">
+                      <p class="field__error" id="email-error" hidden>
+                        <svg class="icon" aria-hidden="true"><use href="#i-alert"></use></svg>
+                        <span></span>
+                      </p>
+                    </div>
+
+                    <!-- type="text" (not "number") so letters and leading zeros are preserved -->
+                    <div class="field">
+                      <label class="field__label" for="student-id">Student ID number <span class="req" aria-hidden="true">*</span></label>
+                      <input class="input" type="text" id="student-id" name="studentId" placeholder="e.g. ICT00123" autocomplete="off" autocapitalize="characters" spellcheck="false" required aria-describedby="student-id-error student-id-hint">
+                      <p class="field__error" id="student-id-error" hidden>
+                        <svg class="icon" aria-hidden="true"><use href="#i-alert"></use></svg>
+                        <span></span>
+                      </p>
+                      <p class="field__hint" id="student-id-hint">Type it exactly as issued, including letters and leading zeros.</p>
+                    </div>
+                  </div>
+                </fieldset>
+
+                <!-- Step 2: Academic information -->
+                <fieldset class="form-section" id="section-academic" tabindex="-1">
+                  <legend class="form-section__legend">
+                    <span class="form-section__step">Step 2</span>
+                    <span class="form-section__title">Academic information</span>
+                  </legend>
+                  <p class="form-section__hint">Tell us where you are in your programme.</p>
+
+                  <div class="form-section__body form-grid form-grid--2">
+                    <div class="field">
+                      <label class="field__label" for="academic-year">Academic year <span class="req" aria-hidden="true">*</span></label>
+                      <select class="select" id="academic-year" name="academicYear" required aria-describedby="academic-year-error">
+                        <option value="" disabled selected>Select academic year</option>
+                        <option value="First Year">First Year</option>
+                        <option value="Second Year">Second Year</option>
+                        <option value="Third Year">Third Year</option>
+                        <option value="Fourth Year">Fourth Year</option>
+                      </select>
+                      <p class="field__error" id="academic-year-error" hidden>
+                        <svg class="icon" aria-hidden="true"><use href="#i-alert"></use></svg>
+                        <span></span>
+                      </p>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="semester">Semester<span class="optional">(optional)</span></label>
+                      <select class="select" id="semester" name="semester">
+                        <option value="">Select semester</option>
+                        <option value="Semester 1">Semester 1</option>
+                        <option value="Semester 2">Semester 2</option>
+                      </select>
+                    </div>
+                  </div>
+                </fieldset>
+
+                <!-- Step 3: Specialisation track.
+                     Radio buttons share one name ("specialisation"), so only one can be chosen. -->
+                <fieldset class="form-section" id="section-track" tabindex="-1" aria-describedby="track-hint track-error">
+                  <legend class="form-section__legend">
+                    <span class="form-section__step">Step 3</span>
+                    <span class="form-section__title">Specialisation track <span class="req" aria-hidden="true">*</span></span>
+                  </legend>
+                  <p class="form-section__hint" id="track-hint">Select one specialisation track.</p>
+
+                  <div class="form-section__body">
+                    <div class="choice-grid">
+                      <label class="choice">
+                        <input class="choice__input" type="radio" name="specialisation" id="track-software-engineering" value="software-engineering" required>
+                        <span class="choice__body">
+                          <span class="icon-tile choice__icon"><svg class="icon" aria-hidden="true"><use href="#i-code"></use></svg></span>
+                          <span class="choice__copy">
+                            <span class="choice__title">Software Engineering</span>
+                            <span class="choice__text">Build reliable software.</span>
+                          </span>
+                          <span class="choice__radio" aria-hidden="true"></span>
+                        </span>
+                      </label>
+
+                      <label class="choice">
+                        <input class="choice__input" type="radio" name="specialisation" id="track-network-security" value="network-security" required>
+                        <span class="choice__body">
+                          <span class="icon-tile choice__icon"><svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg></span>
+                          <span class="choice__copy">
+                            <span class="choice__title">Network Security</span>
+                            <span class="choice__text">Protect networks and data.</span>
+                          </span>
+                          <span class="choice__radio" aria-hidden="true"></span>
+                        </span>
+                      </label>
+
+                      <label class="choice">
+                        <input class="choice__input" type="radio" name="specialisation" id="track-data-science" value="data-science" required>
+                        <span class="choice__body">
+                          <span class="icon-tile choice__icon"><svg class="icon" aria-hidden="true"><use href="#i-chart"></use></svg></span>
+                          <span class="choice__copy">
+                            <span class="choice__title">Data Science</span>
+                            <span class="choice__text">Turn data into insight.</span>
+                          </span>
+                          <span class="choice__radio" aria-hidden="true"></span>
+                        </span>
+                      </label>
+                    </div>
+                    <p class="field__error group-error" id="track-error" hidden>
+                      <svg class="icon" aria-hidden="true"><use href="#i-alert"></use></svg>
+                      <span></span>
+                    </p>
+                  </div>
+                </fieldset>
+
+                <!-- Step 4: Elective courses.
+                     Checkboxes allow more than one choice.
+                     TODO before submission: confirm this elective list with the lecturer. -->
+                <fieldset class="form-section" id="section-electives" tabindex="-1" aria-describedby="electives-hint electives-error">
+                  <legend class="form-section__legend">
+                    <span class="form-section__step">Step 4</span>
+                    <span class="form-section__title">Elective courses <span class="req" aria-hidden="true">*</span></span>
+                  </legend>
+                  <p class="form-section__hint" id="electives-hint">Select one or more electives.</p>
+                  <p class="form-section__aside">
+                    <span class="count-pill" id="elective-count" aria-live="polite">0 of 5 selected</span>
+                  </p>
+
+                  <div class="form-section__body">
+                    <div class="check-grid">
+                      <label class="check">
+                        <input class="check__input" type="checkbox" name="electives" id="elective-advanced-web-development" value="advanced-web-development">
+                        <span class="check__body">
+                          <span class="check__box" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span>
+                          <span class="check__label">Advanced Web Development</span>
+                        </span>
+                      </label>
+
+                      <label class="check">
+                        <input class="check__input" type="checkbox" name="electives" id="elective-database-management" value="database-management">
+                        <span class="check__body">
+                          <span class="check__box" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span>
+                          <span class="check__label">Database Management</span>
+                        </span>
+                      </label>
+
+                      <label class="check">
+                        <input class="check__input" type="checkbox" name="electives" id="elective-mobile-application-development" value="mobile-application-development">
+                        <span class="check__body">
+                          <span class="check__box" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span>
+                          <span class="check__label">Mobile Application Development</span>
+                        </span>
+                      </label>
+
+                      <label class="check">
+                        <input class="check__input" type="checkbox" name="electives" id="elective-cybersecurity-fundamentals" value="cybersecurity-fundamentals">
+                        <span class="check__body">
+                          <span class="check__box" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span>
+                          <span class="check__label">Cybersecurity Fundamentals</span>
+                        </span>
+                      </label>
+
+                      <label class="check">
+                        <input class="check__input" type="checkbox" name="electives" id="elective-data-analytics" value="data-analytics">
+                        <span class="check__body">
+                          <span class="check__box" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span>
+                          <span class="check__label">Data Analytics</span>
+                        </span>
+                      </label>
+                    </div>
+                    <p class="field__error group-error" id="electives-error" hidden>
+                      <svg class="icon" aria-hidden="true"><use href="#i-alert"></use></svg>
+                      <span></span>
+                    </p>
+                  </div>
+                </fieldset>
+
+                <!-- Step 5: Comments and expectations -->
+                <div class="form-section" id="section-submit" tabindex="-1">
+                  <h3 class="form-section__legend">
+                    <span class="form-section__step">Step 5</span>
+                    <span class="form-section__title">Share your expectations</span>
+                  </h3>
+                  <p class="form-section__hint">Add anything you would like the department to know, then submit.</p>
+
+                  <div class="form-section__body">
+                    <div class="field">
+                      <label class="field__label" for="comments">Comments / Expectations<span class="optional">(optional)</span></label>
+                      <textarea class="textarea" id="comments" name="comments" rows="5" maxlength="500" placeholder="Tell us about your academic interests, expectations or any additional information you would like to share." aria-describedby="comments-hint comments-count"></textarea>
+                      <div class="field__meta">
+                        <p id="comments-hint">Up to 500 characters.</p>
+                        <p class="char-count" id="comments-count">0 / 500</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="form-actions">
+                  <div class="form-actions__buttons">
+                    <button type="submit" class="btn btn--primary btn--lg">Submit Registration</button>
+                    <button type="reset" class="btn btn--outline btn--lg">Reset Form</button>
+                  </div>
+                  <p class="form-actions__note">
+                    <svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg>
+                    Prototype: your details are checked in the browser only. Nothing is sent or stored.
+                  </p>
+                </div>
+              </form>
+            </div>
+
+            <!-- ========================================================
+                 5. CONFIRMATION PANEL
+                 Hidden until the form passes validation. The values in
+                 the summary are filled in by js/validation.js.
+                 ======================================================== -->
+            <section class="card success" id="registration-success" tabindex="-1" aria-labelledby="success-title" hidden>
+              <span class="success__icon">
+                <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
+              </span>
+              <h2 class="success__title" id="success-title">Thank you<span id="success-name"></span>. Your form is complete.</h2>
+              <p class="success__text">Every required field passed validation. Here is a summary of what you entered.</p>
+
+              <div class="callout callout--note" role="note">
+                <svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg>
+                <p>
+                  <strong>This is a prototype confirmation</strong>
+                  Your details have not been sent to, or stored by, Rockview University. No real registration has
+                  been made.
+                </p>
+              </div>
+
+              <dl class="summary">
+                <div class="summary__row">
+                  <dt>Full name</dt>
+                  <dd data-summary="fullName"></dd>
+                </div>
+                <div class="summary__row">
+                  <dt>Email address</dt>
+                  <dd data-summary="email"></dd>
+                </div>
+                <div class="summary__row">
+                  <dt>Student ID number</dt>
+                  <dd data-summary="studentId"></dd>
+                </div>
+                <div class="summary__row">
+                  <dt>Academic year</dt>
+                  <dd data-summary="academicYear"></dd>
+                </div>
+                <div class="summary__row">
+                  <dt>Semester</dt>
+                  <dd data-summary="semester"></dd>
+                </div>
+                <div class="summary__row">
+                  <dt>Specialisation track</dt>
+                  <dd data-summary="specialisation"></dd>
+                </div>
+                <div class="summary__row">
+                  <dt>Elective courses</dt>
+                  <dd data-summary="electives"></dd>
+                </div>
+                <div class="summary__row">
+                  <dt>Comments / Expectations</dt>
+                  <dd data-summary="comments"></dd>
+                </div>
+              </dl>
+
+              <div class="success__actions">
+                <a class="btn btn--primary" href="index.html">Return to home</a>
+                <button type="button" class="btn btn--outline" id="edit-details">Edit details</button>
+                <button type="button" class="btn btn--outline" id="new-registration">Start a new registration</button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ================================================================
+         6. FOOTER
+         ================================================================ -->
+    <footer class="site-footer" id="contact">
+      <div class="container">
+        <div class="site-footer__grid">
+          <div class="site-footer__brand">
+            <a class="brand brand--light" href="index.html" aria-label="Rockview University ICT Department, home">
+              <span class="brand__mark">
+            <img src="images/rockview-crest.png" alt="" width="36" height="36">
+          </span>
+              <span class="brand__text">
+                <span class="brand__name">Rockview University</span>
+                <span class="brand__dept">ICT Department</span>
+              </span>
+            </a>
+            <p class="site-footer__about">
+              ICT department portal: department info, courses and online registration.
+            </p>
+          </div>
+
+          <nav aria-labelledby="footer-links-title">
+            <h2 class="site-footer__heading" id="footer-links-title">Quick links</h2>
+            <ul class="site-footer__links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="index.html#about">About Department</a></li>
+              <li><a href="index.html#courses">Courses</a></li>
+              <li><a href="register.html">Registration</a></li>
+            </ul>
+          </nav>
+
+          <div>
+            <h2 class="site-footer__heading">Contact</h2>
+            <!-- Email and phone numbers supplied by the project owner; office still needs confirmation. -->
+            <ul class="contact-list">
+              <li class="contact-list__item">
+                <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
+                <div>
+                  <span class="contact-list__label">Email</span>
+                  <span class="contact-list__value"><a href="mailto:benjamingideon005@gmail.com">benjamingideon005@gmail.com</a></span>
+                </div>
+              </li>
+              <li class="contact-list__item">
+                <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
+                <div>
+                  <span class="contact-list__label">Telephone</span>
+                  <span class="contact-list__value"><span class="contact-phone"><a href="tel:+260975770258">+260 975 770 258</a><a href="tel:+260762536667">+260 762 536 667</a></span></span>
+                </div>
+              </li>
+              <li class="contact-list__item">
+                <svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg>
+                <div>
+                  <span class="contact-list__label">Department office</span>
+                  <span class="contact-list__value"><span class="pill pill--pending-dark">To be confirmed</span></span>
+                </div>
+              </li>
+            </ul>
+            <p class="site-footer__small">Department office details will be added once confirmed.</p>
+          </div>
+        </div>
+
+        <div class="site-footer__bottom">
+          <p>
+            &copy; <span id="year">2026</span> Rockview ICT Portal. Concept preview with illustrative branding, not an
+            official university portal.
+          </p>
+          <a class="back-to-top-link" href="#top">
+            Back to top
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Floating back-to-top button (shown by js/script.js after scrolling down) -->
+    <button type="button" class="to-top" id="to-top" aria-label="Back to top">
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+    </button>
+
+    <!-- ================================================================
+         7. RESET DIALOG AND STATUS MESSAGE
+         ================================================================ -->
+    <dialog class="dialog" id="reset-dialog" aria-labelledby="reset-title" aria-describedby="reset-text">
+      <div class="dialog__body">
+        <span class="dialog__icon">
+          <svg class="icon" aria-hidden="true"><use href="#i-alert"></use></svg>
+        </span>
+        <h2 class="dialog__title" id="reset-title">Clear the registration form?</h2>
+        <p class="dialog__text" id="reset-text">Everything you have entered will be removed. This cannot be undone.</p>
+      </div>
+      <div class="dialog__actions">
+        <button type="button" class="btn btn--outline" id="reset-cancel">Keep my details</button>
+        <button type="button" class="btn btn--danger" id="reset-confirm">Clear form</button>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
+      <span id="toast-message"></span>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/validation.js"></script>
+  </body>
+</html>
